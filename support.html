@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support | Nexus Command</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://cdn3.emoji.gg/emojis/82624-purple-goth-heart.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .support-section {
+            padding: 2rem;
+        }
+        
+        .support-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .support-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .support-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(123, 44, 191, 0.3);
+        }
+        
+        .support-icon {
+            font-size: 2.5rem;
+            color: var(--pink);
+            margin-bottom: 1.5rem;
+        }
+        
+        .support-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--light-purple);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .support-btn:hover {
+            background: var(--pink);
+            box-shadow: 0 0 15px var(--pink);
+        }
+        
+        .support-form-container {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--white);
+            font-family: inherit;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            position: relative;
+            display: inline-block;
+            padding: 15px 30px;
+            color: var(--pink);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            font-weight: 600;
+            overflow: hidden;
+            transition: 0.5s;
+            border-radius: 8px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .submit-btn:hover {
+            color: var(--white);
+            background: var(--light-purple);
+            box-shadow: 0 0 10px var(--light-purple), 0 0 40px var(--light-purple), 0 0 80px var(--light-purple);
+        }
+        
+        .submit-btn span {
+            position: absolute;
+            display: block;
+        }
+        
+        .submit-btn span:nth-child(1) {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--pink));
+            animation: btn-anim1 2s linear infinite;
+        }
+        
+        .submit-btn span:nth-child(2) {
+            top: -100%;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, var(--pink));
+            animation: btn-anim2 2s linear infinite;
+            animation-delay: 0.5s;
+        }
+        
+        .submit-btn span:nth-child(3) {
+            bottom: 0;
+            right: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(270deg, transparent, var(--pink));
+            animation: btn-anim3 2s linear infinite;
+            animation-delay: 1s;
+        }
+        
+        .submit-btn span:nth-child(4) {
+            bottom: -100%;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(360deg, transparent, var(--pink));
+            animation: btn-anim4 2s linear infinite;
+            animation-delay: 1.5s;
+        }
+        
+        .support-faq {
+            margin-top: 3rem;
+        }
+        
+        .faq-item {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: rgba(157, 78, 221, 0.1);
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-answer p {
+            padding-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .faq-item.active .faq-question {
+            background: rgba(157, 78, 221, 0.2);
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bubbles"></div>
+    <div class="bubbles"></div>
+    <div class="bubbles"></div>
+    
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="https://cdn3.emoji.gg/emojis/82624-purple-goth-heart.png" alt="Logo" class="logo-icon">
+                <span class="logo-text">Nexus Command</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="docs.html" class="nav-link">Documentation</a>
+                <a href="support.html" class="nav-link active">Support</a>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="glass-container">
+        <section class="support-section">
+            <h1 class="main-title slide-in">Support Center</h1>
+            
+            <div class="support-options">
+                <div class="support-card">
+                    <div class="support-icon"><i class="fas fa-book"></i></div>
+                    <h3>Documentation</h3>
+                    <p>Check our comprehensive documentation for answers to common questions.</p>
+                    <a href="docs.html" class="support-btn">View Docs</a>
+                </div>
+                
+                <div class="support-card">
+                    <div class="support-icon"><i class="fas fa-comments"></i></div>
+                    <h3>Discord Server</h3>
+                    <p>Join our Discord community for help from staff and other users.</p>
+                    <a href="https://discord.gg/yhPuwb4qsX" class="support-btn">Join Server</a>
+                </div>
+                
+                <div class="support-card">
+                    <div class="support-icon"><i class="fas fa-envelope"></i></div>
+                    <h3>Contact Form</h3>
+                    <p>Send us a message directly for personalized support.</p>
+                    <button class="support-btn" id="open-form-btn">Open Form</button>
+                </div>
+            </div>
+            
+            <div class="support-form-container" id="support-form">
+                <h2>Contact Support</h2>
+                <p>Fill out this form and our team will get back to you as soon as possible.</p>
+                
+                <form id="support-contact-form">
+                    <div class="form-group">
+                        <label for="username">Discord Username</label>
+                        <input type="text" id="username" name="username" placeholder="YourDiscord#0000" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email (optional)</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="issue">Issue Type</label>
+                        <select id="issue" name="issue" required>
+                            <option value="">Select an option</option>
+                            <option value="bug">Bug Report</option>
+                            <option value="feature">Feature Request</option>
+                            <option value="general">General Question</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Describe your issue in detail..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Send Message
+                    </button>
+                </form>
+            </div>
+            
+            <div class="support-faq">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I add the bot to my server?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Click the "Add to Discord" button on our website or use the invite link from our Discord server. You'll need "Manage Server" permissions to add the bot.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Why can't I use certain commands?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Some commands require specific permissions. Check the command documentation for requirements. Server admins can adjust command permissions using <code>/settings permissions</code>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Support form toggle
+        const openFormBtn = document.getElementById('open-form-btn');
+        const supportForm = document.getElementById('support-form');
+
+        if (openFormBtn && supportForm) {
+            openFormBtn.addEventListener('click', () => {
+                supportForm.style.display = supportForm.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Form submission
+        const supportFormElement = document.getElementById('support-contact-form');
+        
+        if (supportFormElement) {
+            supportFormElement.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const formData = new FormData(supportFormElement);
+                const data = Object.fromEntries(formData);
+                
+                // Replace with your actual webhook URL
+                const webhookUrl = 'https://discord.com/api/webhooks/1396248389733187665/CqhCobJCwZ86dQbi42-IPnw2hoVsTY6f_dADzGbji0PfSgNwVjR2SSKesZKgg8OlORUe';
+                
+                const embed = {
+                    title: 'New Support Request',
+                    color: 0x9D4EDD,
+                    fields: [
+                        {
+                            name: 'Username',
+                            value: data.username || 'Not provided',
+                            inline: true
+                        },
+                        {
+                            name: 'Email',
+                            value: data.email || 'Not provided',
+                            inline: true
+                        },
+                        {
+                            name: 'Issue Type',
+                            value: data.issue || 'Not specified',
+                            inline: true
+                        },
+                        {
+                            name: 'Message',
+                            value: data.message || 'No message provided'
+                        }
+                    ],
+                    timestamp: new Date().toISOString()
+                };
+                
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        embeds: [embed]
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Your support request has been submitted successfully!');
+                        supportFormElement.reset();
+                        supportForm.style.display = 'none';
+                    } else {
+                        alert('There was an error submitting your request. Please try again later.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('There was an error submitting your request. Please try again later.');
+                });
+            });
+        }
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features | Nexus Command</title>
+    <link rel="icon" href="https://cdn3.emoji.gg/emojis/82624-purple-goth-heart.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional Styles for Features Page */
+        .features-section {
+            padding: 3rem 2rem;
+        }
+
+        .main-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .main-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--pink), transparent);
+            border-radius: 2px;
+        }
+
+        .feature-category {
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .feature-category:last-child {
+            margin-bottom: 2rem;
+        }
+
+        .category-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--pink);
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px var(--light-purple);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .category-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 30px;
+            background: var(--pink);
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--pink);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(157, 78, 221, 0.1) 0%,
+                transparent 50%,
+                rgba(157, 78, 221, 0.1) 100%
+            );
+            z-index: -1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(123, 44, 191, 0.4);
+            border-color: var(--pink);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--pink);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px var(--light-purple);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2);
+            color: var(--white);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+            position: relative;
+            display: inline-block;
+        }
+
+        .feature-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--pink);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover h3::after {
+            width: 100%;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover p {
+            opacity: 1;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .category-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .features-section {
+                padding: 2rem 1rem;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animation for feature cards */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        .feature-card:nth-child(5) { animation-delay: 0.5s; }
+        .feature-card:nth-child(6) { animation-delay: 0.6s; }
+        .feature-card:nth-child(7) { animation-delay: 0.7s; }
+        .feature-card:nth-child(8) { animation-delay: 0.8s; }
+        .feature-card:nth-child(9) { animation-delay: 0.9s; }
+    </style>
+</head>
+<body>
+    <div class="bubbles"></div>
+    <div class="bubbles"></div>
+    <div class="bubbles"></div>
+    
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="https://cdn3.emoji.gg/emojis/82624-purple-goth-heart.png" alt="Logo" class="logo-icon">
+                <span class="logo-text">Nexus Command</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="features.html" class="nav-link active">Features</a>
+                <a href="status.html" class="nav-link">Status</a>
+                <a href="docs.html" class="nav-link">Documentation</a>
+                <a href="support.html" class="nav-link">Support</a>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="glass-container">
+        <section class="features-section">
+            <h1 class="main-title slide-in">Nexus Command Features</h1>
+            
+            <div class="feature-category">
+                <h2 class="category-title">Moderation</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-gavel"></i></div>
+                        <h3>Advanced Moderation</h3>
+                        <p>Full suite of moderation tools including ban, kick, mute, warn, and more with detailed logging.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3>Auto-Moderation</h3>
+                        <p>Automatically detect and handle spam, raids, excessive mentions, and inappropriate content.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-history"></i></div>
+                        <h3>Case System</h3>
+                        <p>Track all moderation actions with a comprehensive case system and searchable logs.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-category">
+                <h2 class="category-title">Utility</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-search"></i></div>
+                        <h3>Advanced Search</h3>
+                        <p>Search messages, users, and server content with powerful filtering options.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-info-circle"></i></div>
+                        <h3>Server Info</h3>
+                        <p>Detailed server analytics, member information, and channel statistics.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-ticket-alt"></i></div>
+                        <h3>Ticketing</h3>
+                        <p>Create and manage support tickets with customizable panels and responses.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-category">
+                <h2 class="category-title">Fun</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-gamepad"></i></div>
+                        <h3>Games</h3>
+                        <p>Interactive games with leaderboards and achievements.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-images"></i></div>
+                        <h3>Image Manipulation</h3>
+                        <p>Create memes, edit avatars, and generate custom images.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-music"></i></div>
+                        <h3>Music</h3>
+                        <p>High quality music playback with playlists and effects.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

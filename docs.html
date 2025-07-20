@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation | Nexus Command</title>
+    <link rel="icon" href="https://cdn3.emoji.gg/emojis/82624-purple-goth-heart.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --glass: rgba(40, 42, 54, 0.8);
+            --glass-border: rgba(68, 71, 90, 0.5);
+            --pink: #9D4EDD;
+            --white: #F8F8F2;
+        }
+        
+        .docs-section {
+            display: flex;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .docs-sidebar {
+            width: 300px;
+            background: var(--glass);
+            border-right: 1px solid var(--glass-border);
+            padding: 2rem;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+        
+        .docs-search {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .docs-search input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--white);
+            font-family: inherit;
+        }
+        
+        .docs-search i {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.7;
+        }
+        
+        .docs-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .docs-category {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .docs-category:hover {
+            opacity: 1;
+            background: rgba(157, 78, 221, 0.2);
+        }
+        
+        .docs-category.active {
+            opacity: 1;
+            background: rgba(157, 78, 221, 0.3);
+            color: var(--pink);
+        }
+        
+        .docs-content {
+            flex: 1;
+            padding: 2rem 3rem;
+            overflow-y: auto;
+        }
+        
+        .docs-content-section {
+            display: none;
+        }
+        
+        .docs-content-section.active {
+            display: block;
+        }
+        
+        .docs-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--pink);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .docs-content h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--pink);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .docs-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--pink);
+        }
+        
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-left: 3px solid var(--pink);
+        }
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+        }
+        
+        .command {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .command-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .command-permission {
+            font-size: 0.8rem;
+            background: rgba(157, 78, 221, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .command-usage {
+            font-size: 0.9rem;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+        
+        .embed-preview {
+            background: #2C2F33;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            max-width: 500px;
+        }
+        
+        .embed-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+        
+        .embed-description {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+        
+        .embed-footer {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+        
+        .command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .command-item {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 1rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .command-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(123, 44, 191, 0.3);
+        }
+        
+        .command-name {
+            font-weight: 600;
+            color: var(--pink);
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .command-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .language-section {
+            margin-bottom: 3rem;
+        }
+        
+        .language-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--pink);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .language-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Webhook Section Styles */
+        .warning-box {
+            background: rgba(255, 165, 0, 0.2);
+            border-left: 4px solid orange;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .code-tabs {
+            margin: 2rem 0;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab-button {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .tab-button.active {
+            background: var(--pink);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .webhook-preview {
+            background: #36393F;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .webhook-message {
+            color: var(--white);
+        }
+
+        .webhook-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .webhook-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--pink);
+            margin-bottom: 1rem;
+        }
+
+        .error-table {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .error-row {
+            display: contents;
+        }
+
+        .error-code {
+            background: rgba(255, 0, 0, 0.2);
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .security-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .security-tip {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .docs-section {
+                flex-direction: column;
+            }
+            
+            .docs-sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--glass-border);
+            }
+            
+            .docs-content {
+                padding: 2rem;
+            }
+
+            .command-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bubbles"></div>
+    <div class="bubbles"></div>
+    <div class="bubbles"></div>
+    
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="https://cdn3.emoji.gg/emojis/82624-purple-goth-heart.png" alt="Nexus Command Logo" class="logo-icon">
+                <span class="logo-text">Nexus Command</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="docs.html" class="nav-link active">Documentation</a>
+                <a href="support.html" class="nav-link">Support</a>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+                <span class="sr-only">Menu</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="glass-container">
+        <section class="docs-section">
+            <div class="docs-sidebar">
+                <div class="docs-search">
+                    <input type="text" placeholder="Search documentation..." aria-label="Search documentation">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </div>
+                <div class="docs-categories">
+                    <div class="docs-category active" data-category="getting-started">
+                        <i class="fas fa-rocket" aria-hidden="true"></i>
+                        <span>Getting Started</span>
+                    </div>
+                    <div class="docs-category" data-category="commands">
+                        <i class="fas fa-terminal" aria-hidden="true"></i>
+                        <span>Commands</span>
+                    </div>
+                    <div class="docs-category" data-category="embeds">
+                        <i class="fas fa-code" aria-hidden="true"></i>
+                        <span>Embeds</span>
+                    </div>
+                    <div class="docs-category" data-category="webhooks">
+                        <i class="fas fa-link" aria-hidden="true"></i>
+                        <span>Webhooks</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="docs-content">
+                <div class="docs-content-section active" id="getting-started">
+                    <h1>Getting Started</h1>
+                    <p>Welcome to Nexus Command! This guide will help you get started with setting up and using the bot on your Discord server.</p>
+                    
+                    <h2>Inviting the Bot</h2>
+                    <p>To add Nexus Command to your server:</p>
+                    <ol>
+                        <li>Click the "Add to Discord" button on our website</li>
+                        <li>Select your server from the dropdown menu</li>
+                        <li>Grant the necessary permissions (we recommend Administrator for full functionality)</li>
+                        <li>Complete the captcha verification</li>
+                    </ol>
+                    
+                    <h2>Basic Setup</h2>
+                    <p>After inviting the bot, you could run the <code>RB_setupvm</code> command to configure voice master.</p>
+                    
+                    <h2>First Commands</h2>
+                    <p>Try these basic commands to get started:</p>
+                    <ul>
+                        <li><code>[JS/PY/RS/RB]_tool</code> - Shows all available commands</li>
+                        <li><code>[JS/PY/RS/RB]_ping</code> - Checks bot latency</li>
+                        <li><code>PY_serverinfo</code> - Shows server information</li>
+                    </ul>
+                </div>
+                
+                <div class="docs-content-section" id="commands">
+                    <h1>Command Reference</h1>
+                    <p>Nexus Command offers hundreds of commands organized by programming language.</p>
+                    
+                    <div class="language-section">
+                        <h2 class="language-title">
+                            <i class="fab fa-js language-icon" aria-hidden="true"></i>
+                            JavaScript Commands
+                        </h2>
+                        <div class="command-grid">
+                            <div class="command-item">
+                                <div class="command-name">JS_ban</div>
+                                <div class="command-desc">Ban command with embedded-style buttons</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">JS_clear</div>
+                                <div class="command-desc">Deletes multiple messages with various filtering options</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">JS_kick</div>
+                                <div class="command-desc">Kicks a member from the server</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">JS_lock</div>
+                                <div class="command-desc">Locks the current channel and all threads</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">JS_mute</div>
+                                <div class="command-desc">Mutes a member with timeout</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">JS_ping</div>
+                                <div class="command-desc">Check the bot's latency and response times</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">JS_prettify</div>
+                                <div class="command-desc">Sends "✨" to all messageable channels hourly</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">JS_security</div>
+                                <div class="command-desc">Server security management system</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">JS_unlink</div>
+                                <div class="command-desc">Prevents all interactions with a message</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">JS_unmute</div>
+                                <div class="command-desc">Removes timeout from a member</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">JS_voidban</div>
+                                <div class="command-desc">Permanently ban a user with unbreakable protection</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">JS_warn</div>
+                                <div class="command-desc">Warns a member and tracks warnings persistently</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">JS_wblist</div>
+                                <div class="command-desc">Whitelist and blacklist management system</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-section">
+                        <h2 class="language-title">
+                            <i class="fab fa-python language-icon" aria-hidden="true"></i>
+                            Python Commands
+                        </h2>
+                        <div class="command-grid">
+                            <div class="command-item">
+                                <div class="command-name">PY_apifetch</div>
+                                <div class="command-desc">Fetches data from cool APIs</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_barcode</div>
+                                <div class="command-desc">Generate a barcode from text</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_bypass</div>
+                                <div class="command-desc">Bypasses Linkvertise, AdFly, and other shorteners</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_bypasser</div>
+                                <div class="command-desc">Ultimate bypass toolkit with 20+ methods</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_emoji</div>
+                                <div class="command-desc">Manage server emojis - search, add, remove, or bulk add</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_fetchbanner</div>
+                                <div class="command-desc">Fetch a user's banner</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_fetchpfp</div>
+                                <div class="command-desc">Fetch a user's profile picture</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_findhooks</div>
+                                <div class="command-desc">Finds and lists all webhooks in the server</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_image</div>
+                                <div class="command-desc">Get a random image</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_ping</div>
+                                <div class="command-desc">Simulates API fetching with progress updates</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_roblox</div>
+                                <div class="command-desc">Gets detailed Roblox user information</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_serverinfo</div>
+                                <div class="command-desc">Displays information about the server</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_serverroles</div>
+                                <div class="command-desc">Displays all roles in the server with pagination</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_spotify</div>
+                                <div class="command-desc">Download Spotify tracks using spotDL</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_tiktok</div>
+                                <div class="command-desc">Download and send TikTok videos</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_unfriend</div>
+                                <div class="command-desc">Mass unfriend tool for Roblox accounts</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_urlinspect</div>
+                                <div class="command-desc">Ultimate URL Inspector - WHOIS/IP/DNS/SSL/VirusTotal</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_userinfo</div>
+                                <div class="command-desc">Displays detailed information about a user</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">PY_warnings</div>
+                                <div class="command-desc">View a member's warnings</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-section">
+                        <h2 class="language-title">
+                            <i class="fas fa-gem language-icon" aria-hidden="true"></i>
+                            Ruby Commands
+                        </h2>
+                        <div class="command-grid">
+                            <div class="command-item">
+                                <div class="command-name">RB_afk</div>
+                                <div class="command-desc">Set your AFK status with an optional message</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_ansi</div>
+                                <div class="command-desc">Create advanced ANSI messages with colors, gradients, and styles</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_ascii</div>
+                                <div class="command-desc">Convert text, emoji, or images to ASCII art</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_claimogticket</div>
+                                <div class="command-desc">Claim your OG role if you joined before May 1st, 2025</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_deletewebhook</div>
+                                <div class="command-desc">Deletes a Discord webhook by its URL</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_dm</div>
+                                <div class="command-desc">Direct message functionality</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_guesscard</div>
+                                <div class="command-desc">Guess the card game</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_invisible</div>
+                                <div class="command-desc">Changes your nickname to an invisible character</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_invitelist</div>
+                                <div class="command-desc">Displays the official bot invite list</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_klogger</div>
+                                <div class="command-desc">Provides a keylogger script for educational purposes</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_linkembed</div>
+                                <div class="command-desc">Creates embeds with buttons and color transitions</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_message</div>
+                                <div class="command-desc">Message functionality</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_mimic</div>
+                                <div class="command-desc">Creates a webhook to mimic a user and send a message</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_reply</div>
+                                <div class="command-desc">Reply to a specific message using its ID</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_setupvm</div>
+                                <div class="command-desc">Setup the Voice Master system in this server</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_summarize</div>
+                                <div class="command-desc">Summarizes text or URLs using AI</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_sync</div>
+                                <div class="command-desc">Copies all messages from source to target channel</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RB_timestamp</div>
+                                <div class="command-desc">Generates Discord timestamp formats for a given date</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="language-section">
+                        <h2 class="language-title">
+                            <i class="fas fa-cog language-icon" aria-hidden="true"></i>
+                            Rust Commands
+                        </h2>
+                        <div class="command-grid">
+                            <div class="command-item">
+                                <div class="command-name">RS_autorole</div>
+                                <div class="command-desc">Sets a role to be automatically assigned to new members</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_countcheck</div>
+                                <div class="command-desc">Counting system functionality</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_enlarge</div>
+                                <div class="command-desc">Show an enlarged version of an emoji</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_grabemoji</div>
+                                <div class="command-desc">Copy emojis from other servers to this one</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_grabsound</div>
+                                <div class="command-desc">Get soundboard sound information</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_grabsticker</div>
+                                <div class="command-desc">Copy stickers from other servers to this one</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_kendricklamarmustard</div>
+                                <div class="command-desc">Creates a void zone with Space Boy role</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_poll</div>
+                                <div class="command-desc">Create an advanced poll with visual effects and time limit</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_receipt</div>
+                                <div class="command-desc">Generate payment receipts</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_rgb</div>
+                                <div class="command-desc">Creates rainbow-colored embeds with smooth transitions</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_role</div>
+                                <div class="command-desc">Role management command</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_setupcounter</div>
+                                <div class="command-desc">Sets up counting channel</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_smoothchannels</div>
+                                <div class="command-desc">Disables invite creation and threads in all server channels</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_textimage</div>
+                                <div class="command-desc">Convert text to an image</div>
+                            </div>
+                            <div class="command-item">
+                                <div class="command-name">RS_tiktok</div>
+                                <div class="command-desc">TikTok-style video viewer with swipe functionality</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="docs-content-section" id="embeds">
+                    <h1>Embed System</h1>
+                    <p>Nexus Command uses advanced embed creation for beautiful, informative messages.</p>
+                    
+                    <h2>Basic Embed</h2>
+                    <div class="embed-preview" style="border-left: 5px solid #9D4EDD;">
+                        <div class="embed-content">
+                            <div class="embed-title">Welcome to Our Server!</div>
+                            <div class="embed-description">Please read the rules and enjoy your stay.</div>
+                            <div class="embed-footer">Nexus Command • Today at 12:34 PM</div>
+                        </div>
+                    </div>
+                    
+                    <h2>Creating Embeds</h2>
+                    <p>Use the <code>/embed create</code> command to build custom embeds:</p>
+                    <pre><code>/embed create 
+title:"Server Rules" 
+description:"1. Be respectful\n2. No spam\n3. Follow Discord TOS" 
+color:"#9D4EDD" 
+footer:"Last updated June 2023"</code></pre>
+                </div>
+                
+                <div class="docs-content-section" id="webhooks">
+                    <h1>Webhook Integration</h1>
+                    <p>Nexus Command provides powerful webhook integration for automation, logging, and custom messaging systems.</p>
+
+                    <div class="warning-box">
+                        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                        <strong>Security Notice:</strong> Webhook URLs should be kept private as they can be used to post messages without authentication.
+                    </div>
+
+                    <h2>Webhook Basics</h2>
+                    <p>Webhooks are user-defined HTTP callbacks that allow real-time communication between Discord and external services.</p>
+
+                    <h3>Creating Webhooks in Discord</h3>
+                    <ol>
+                        <li>Go to <strong>Server Settings</strong> → <strong>Integrations</strong> → <strong>Webhooks</strong></li>
+                        <li>Click <strong>New Webhook</strong></li>
+                        <li>Configure:
+                            <ul>
+                                <li>Name (the display name for the webhook)</li>
+                                <li>Channel (where messages will be sent)</li>
+                                <li>Avatar (optional image)</li>
+                            </ul>
+                        </li>
+                        <li>Copy the <strong>Webhook URL</strong></li>
+                    </ol>
+
+                    <h2>Webhook JSON Structure</h2>
+                    <p>Nexus Command webhooks use a standardized JSON format with these key components:</p>
+
+                    <div class="code-tabs">
+                        <div class="tab-buttons">
+                            <button class="tab-button active" data-tab="basic-webhook">Basic Message</button>
+                            <button class="tab-button" data-tab="embed-webhook">With Embed</button>
+                            <button class="tab-button" data-tab="component-webhook">With Components</button>
+                        </div>
+                        
+                        <div class="tab-content active" id="basic-webhook">
+                            <pre><code class="language-json">{
+    "content": "Hello from Nexus Command!",
+    "username": "CustomBotName",
+    "avatar_url": "https://cdn.discordapp.com/avatars/1353915451650080819/a_299e10df523e84f0afcc06c4351ed166.gif",
+    "tts": false
+}</code></pre>
+                            <div class="webhook-preview">
+                                <div class="webhook-message">
+                                    <div class="webhook-header">
+                                        <img src="https://example.com/avatar.png" class="webhook-avatar" alt="Webhook Avatar">
+                                        <span class="webhook-name">CustomBotName</span>
+                                    </div>
+                                    <div class="webhook-content">Hello from Nexus Command!</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="embed-webhook">
+                            <pre><code class="language-json">{
+    "content": "System Notification",
+    "embeds": [
+        {
+            "title": "Server Update",
+            "description": "Maintenance scheduled for tomorrow at 3AM UTC",
+            "color": 5814783,
+            "fields": [
+                {
+                    "name": "Duration",
+                    "value": "2 hours",
+                    "inline": true
+                },
+                {
+                    "name": "Affected Services",
+                    "value": "Database, API",
+                    "inline": true
+                }
+            ],
+            "footer": {
+                "text": "Nexus Command • System Alert"
+            }
+        }
+    ]
+}</code></pre>
+                            <div class="webhook-preview">
+                                <div class="webhook-message">
+                                    <div class="webhook-content">System Notification</div>
+                                    <div class="webhook-embed">
+                                        <div class="embed-title">Server Update</div>
+                                        <div class="embed-description">Maintenance scheduled for tomorrow at 3AM UTC</div>
+                                        <div class="embed-fields">
+                                            <div class="embed-field">
+                                                <div class="field-name">Duration</div>
+                                                <div class="field-value">2 hours</div>
+                                            </div>
+                                            <div class="embed-field">
+                                                <div class="field-name">Affected Services</div>
+                                                <div class="field-value">Database, API</div>
+                                            </div>
+                                        </div>
+                                        <div class="embed-footer">Nexus Command • System Alert</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="component-webhook">
+                            <pre><code class="language-json">{
+    "content": "Please select an option:",
+    "components": [
+        {
+            "type": 1,
+            "components": [
+                {
+                    "type": 2,
+                    "label": "Approve",
+                    "style": 3,
+                    "custom_id": "approve_btn"
+                },
+                {
+                    "type": 2,
+                    "label": "Deny",
+                    "style": 4,
+                    "custom_id": "deny_btn"
+                }
+            ]
+        }
+    ]
+}</code></pre>
+                            <div class="webhook-preview">
+                                <div class="webhook-message">
+                                    <div class="webhook-content">Please select an option:</div>
+                                    <div class="webhook-buttons">
+                                        <button class="discord-button green">Approve</button>
+                                        <button class="discord-button red">Deny</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>Webhook Types</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-bell" aria-hidden="true"></i></div>
+                            <h3>Notification Webhooks</h3>
+                            <p>Receive real-time alerts for server events like joins, leaves, moderation actions, and more.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-robot" aria-hidden="true"></i></div>
+                            <h3>Custom Bots</h3>
+                            <p>Create pseudo-bots with custom names and avatars for specific purposes.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-database" aria-hidden="true"></i></div>
+                            <h3>Data Logging</h3>
+                            <p>Log server activity to external databases or analytics platforms.</p>
+                        </div>
+                    </div>
+
+                    <h2>Advanced Webhook Features</h2>
+                    <h3>Rate Limiting</h3>
+                    <p>Discord webhooks have rate limits:</p>
+                    <ul>
+                        <li><strong>5 requests per second</strong> per webhook</li>
+                        <li>Bursts up to <strong>10 requests</strong> allowed with proper queueing</li>
+                    </ul>
+
+                    <h3>Error Handling</h3>
+                    <p>Common webhook errors and solutions:</p>
+                    <div class="error-table">
+                        <div class="error-row">
+                            <div class="error-code">401</div>
+                            <div class="error-desc">Invalid webhook URL - check for typos</div>
+                        </div>
+                        <div class="error-row">
+                            <div class="error-code">403</div>
+                            <div class="error-desc">Webhook deleted or permissions revoked</div>
+                        </div>
+                        <div class="error-row">
+                            <div class="error-code">429</div>
+                            <div class="error-desc">Rate limited - implement exponential backoff</div>
+                        </div>
+                    </div>
+
+                    <h2>Security Best Practices</h2>
+                    <div class="security-tips">
+                        <div class="security-tip">
+                            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                            <p>Rotate webhook URLs periodically</p>
+                        </div>
+                        <div class="security-tip">
+                            <i class="fas fa-eye-slash" aria-hidden="true"></i>
+                            <p>Never commit webhook URLs to public repositories</p>
+                        </div>
+                        <div class="security-tip">
+                            <i class="fas fa-filter" aria-hidden="true"></i>
+                            <p>Validate incoming webhook payloads</p>
+                        </div>
+                    </div>
+
+                    <h2>Integration Examples</h2>
+                    <h3>With Nexus Command</h3>
+                    <pre><code class="language-javascript">// Sample Node.js webhook sender
+const sendWebhook = async (url, content) => {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                content: content,
+                username: 'Nexus Bot',
+                avatar_url: 'https://cdn.discordapp.com/avatars/1353915451650080819/a_299e10df523e84f0afcc06c4351ed166.gif'
+            })
+        });
+        console.log('Webhook delivered successfully');
+    } catch (error) {
+        console.error('Webhook failed:', error);
+    }
+};</code></pre>
+
+                    <h3>With External Services</h3>
+                    <p>Popular services that support Discord webhooks:</p>
+                    <ul>
+                        <li>GitHub/GitLab (commit notifications)</li>
+                        <li>CI/CD pipelines (build status)</li>
+                        <li>Monitoring tools (uptime alerts)</li>
+                        <li>Payment processors (transaction notifications)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Documentation category switching
+        document.querySelectorAll('.docs-category').forEach(category => {
+            category.addEventListener('click', () => {
+                // Remove active class from all categories
+                document.querySelectorAll('.docs-category').forEach(c => {
+                    c.classList.remove('active');
+                });
+                
+                // Add active class to clicked category
+                category.classList.add('active');
+                
+                // Hide all content sections
+                document.querySelectorAll('.docs-content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show corresponding section
+                const categoryName = category.getAttribute('data-category');
+                document.getElementById(categoryName).classList.add('active');
+            });
+        });
+
+        // Tab switching for webhook examples
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                const tabContainer = button.closest('.code-tabs');
+                
+                // Update active tab button
+                tabContainer.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+                
+                // Update active tab content
+                tabContainer.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                tabContainer.querySelector(`#${tabId}`).classList.add('active');
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+        }
+    </script>
+</body>
+</html>
