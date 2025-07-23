@@ -1,73 +1,110 @@
-// Enhanced Typing Effect
-const typingText = document.getElementById('typing-text');
-const messages = ["Nexus Command", "The ultimate Discord bot", "Multi-language support", "Powerful features"];
-let messageIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-let typingSpeed = 100;
-let isPaused = false;
-
-function type() {
-    if (isPaused) {
-        setTimeout(type, typingSpeed);
-        return;
-    }
-
-    const currentMessage = messages[messageIndex];
-    
-    if (isDeleting) {
-        // Delete the entire line at once for cleaner effect
-        typingText.textContent = '';
-        charIndex = 0;
-        isDeleting = false;
-        messageIndex = (messageIndex + 1) % messages.length;
-        typingSpeed = 500; // Pause before typing next message
-    } else {
-        typingText.textContent = currentMessage.substring(0, charIndex + 1);
-        charIndex++;
-        
-        if (charIndex === currentMessage.length) {
-            isPaused = true;
-            typingSpeed = 2000; // Pause at end of message
-            setTimeout(() => {
-                isPaused = false;
-                isDeleting = true;
-                typingSpeed = 50;
-                type();
-            }, typingSpeed);
-            return;
-        } else {
-            typingSpeed = 100 - Math.random() * 50; // Variable speed for natural feel
-        }
-    }
-
-    setTimeout(type, typingSpeed);
-}
-
-// Initialize typing effect
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(type, 1000);
-    
-    // Add animated background elements
-    createFloatingParticles();
+    initTypingEffect();
+    initParticleBackground();
+    initShowcaseGallery();
+    initMobileMenu();
+    initInteractiveElements();
+    initSmoothScrolling();
+    cleanPageUrls();
 });
 
-// Create floating particles effect
-function createFloatingParticles() {
-    const container = document.querySelector('.glass-container');
-    if (!container) return;
+function cleanPageUrls() {
+    if (window.history.replaceState) {
+        const path = window.location.pathname;
+        if (path.endsWith('.html')) {
+            const cleanUrl = path.replace(/\.html$/, '');
+            window.history.replaceState(null, null, cleanUrl);
+        }
+    }
+}
 
-    for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'floating-particle';
+function initTypingEffect() {
+    const typingText = document.getElementById('typing-text');
+    if (!typingText) return;
+
+    const botMessages = [
+        "Nexus Command", 
+        "Your ultimate Discord companion", 
+        "Multi-language support", 
+        "Moderation • Music • Fun",
+        "100+ powerful features"
+    ];
+
+    let currentMessageIndex = 0;
+    let currentCharIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+    let isTypingPaused = false;
+
+    const type = () => {
+        if (isTypingPaused) {
+            setTimeout(type, typingSpeed);
+            return;
+        }
+
+        const currentMessage = botMessages[currentMessageIndex];
         
-        // Random properties
-        const size = Math.random() * 5 + 3;
+        if (isDeleting) {
+            typingText.textContent = currentMessage.substring(0, currentCharIndex);
+            currentCharIndex--;
+            
+            if (currentCharIndex === 0) {
+                isDeleting = false;
+                currentMessageIndex = (currentMessageIndex + 1) % botMessages.length;
+                typingSpeed = 500;
+            } else {
+                typingSpeed = 30;
+            }
+        } else {
+            typingText.textContent = currentMessage.substring(0, currentCharIndex + 1);
+            currentCharIndex++;
+            
+            if (currentCharIndex === currentMessage.length) {
+                isTypingPaused = true;
+                typingSpeed = 2000;
+                setTimeout(() => {
+                    isTypingPaused = false;
+                    isDeleting = true;
+                    typingSpeed = 30;
+                    type();
+                }, typingSpeed);
+                return;
+            } else {
+                typingSpeed = 100 - Math.random() * 50;
+            }
+        }
+
+        setTimeout(type, typingSpeed);
+    };
+
+    setTimeout(type, 1000);
+}
+
+function initParticleBackground() {
+    const particleContainer = document.createElement('div');
+    particleContainer.className = 'particle-container';
+    particleContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        overflow: hidden;
+    `;
+    document.body.appendChild(particleContainer);
+
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        const size = Math.random() * 5 + 2;
         const posX = Math.random() * 100;
         const posY = Math.random() * 100;
         const duration = Math.random() * 20 + 10;
-        const delay = Math.random() * 5;
-        const opacity = Math.random() * 0.5 + 0.1;
+        const delay = Math.random() * 10;
+        const opacity = Math.random() * 0.3 + 0.1;
         
         particle.style.cssText = `
             width: ${size}px;
@@ -81,145 +118,147 @@ function createFloatingParticles() {
             z-index: -1;
         `;
         
-        container.appendChild(particle);
+        particleContainer.appendChild(particle);
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes floatParticle {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: ${Math.random() * 0.5 + 0.1};
+            }
+            90% {
+                opacity: ${Math.random() * 0.5 + 0.1};
+            }
+            100% {
+                transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(0.5);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+function initShowcaseGallery() {
+    const showcaseTrack = document.getElementById('showcase-track');
+    const showcaseModal = document.getElementById('showcase-modal');
+    
+    if (!showcaseTrack || !showcaseModal) return;
+
+    const showcaseImages = [
+        { url: "https://i.ibb.co/gMsBpNKf/Profile.png", title: "Profile" },
+        { url: "https://i.ibb.co/Hpgzwk55/pytool.png", title: "PY_tool" },
+        { url: "https://i.ibb.co/JwYhH52x/emoji.png", title: "RS_grabemoji" },
+        { url: "https://i.ibb.co/LX9Rs43j/image.png", title: "JS_voidban" },
+        { url: "https://i.ibb.co/FLvjvbwr/mimic.png", title: "RB_mimic" },
+        { url: "https://i.ibb.co/6cqkpWC9/Screenshot-2025-07-19-195116.png", title: "Voice Master" }
+    ];
+
+    showcaseImages.forEach(image => {
+        const item = document.createElement('div');
+        item.className = 'showcase-item';
+        item.setAttribute('data-title', image.title);
+        
+        const img = document.createElement('img');
+        img.src = image.url;
+        img.alt = image.title;
+        img.loading = 'lazy';
+        
+        item.appendChild(img);
+        showcaseTrack.appendChild(item);
+        
+        item.addEventListener('click', () => {
+            const modalImage = showcaseModal.querySelector('#modal-image');
+            const imageTitle = showcaseModal.querySelector('#image-title');
+            
+            modalImage.src = image.url;
+            modalImage.alt = image.title;
+            imageTitle.textContent = image.title;
+            
+            showcaseModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    const closeModal = showcaseModal.querySelector('.close-modal');
+    closeModal.addEventListener('click', () => {
+        showcaseModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    showcaseModal.addEventListener('click', (e) => {
+        if (e.target === showcaseModal) {
+            showcaseModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    const duplicateShowcase = showcaseTrack.cloneNode(true);
+    showcaseTrack.appendChild(duplicateShowcase);
+}
+
+function initMobileMenu() {
+    const menuToggle = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
     }
 }
 
-// Add CSS for floating particles
-const style = document.createElement('style');
-style.textContent = `
-@keyframes floatParticle {
-    0% {
-        transform: translate(0, 0) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 200}px) rotate(${Math.random() * 360}deg);
-        opacity: 0;
-    }
-}
-`;
-document.head.appendChild(style);
+function initInteractiveElements() {
+    document.querySelectorAll('.neon-button, .btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple-effect';
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 1000);
+        });
+    });
 
-// Enhanced Docs category switching
-const docsCategories = document.querySelectorAll('.docs-category');
-const docsSections = document.querySelectorAll('.docs-content-section');
-
-if (docsCategories.length && docsSections.length) {
-    docsCategories.forEach(category => {
-        category.addEventListener('click', () => {
-            // Remove active class from all categories and sections
-            docsCategories.forEach(c => c.classList.remove('active'));
-            docsSections.forEach(s => s.classList.remove('active'));
-            
-            // Add active class to clicked category
-            category.classList.add('active');
-            
-            // Show corresponding section with fade effect
-            const categoryName = category.getAttribute('data-category');
-            const targetSection = document.getElementById(categoryName);
-            targetSection.style.opacity = 0;
-            targetSection.classList.add('active');
-            
-            let opacity = 0;
-            const fadeIn = setInterval(() => {
-                opacity += 0.1;
-                targetSection.style.opacity = opacity;
-                if (opacity >= 1) clearInterval(fadeIn);
-            }, 30);
+    document.querySelectorAll('.hover-glow').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            el.style.transform = 'translateY(-2px)';
+            el.style.boxShadow = '0 5px 15px rgba(157, 78, 221, 0.4)';
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            el.style.transform = '';
+            el.style.boxShadow = '';
         });
     });
 }
 
-// Enhanced Tab switching
-document.querySelectorAll('.tab-button').forEach(button => {
-    button.addEventListener('click', () => {
-        const tabId = button.getAttribute('data-tab');
-        const tabContainer = button.closest('.code-tabs');
-        
-        // Remove active class from all buttons and content
-        tabContainer.querySelectorAll('.tab-button').forEach(btn => {
-            btn.classList.remove('active');
+function initSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         });
-        tabContainer.querySelectorAll('.tab-content').forEach(content => {
-            content.classList.remove('active');
-        });
-        
-        // Add active class to clicked button and corresponding content
-        button.classList.add('active');
-        const targetTab = document.getElementById(tabId);
-        targetTab.classList.add('active');
-        
-        // Add animation effect
-        targetTab.style.opacity = 0;
-        let opacity = 0;
-        const fadeIn = setInterval(() => {
-            opacity += 0.1;
-            targetTab.style.opacity = opacity;
-            if (opacity >= 1) clearInterval(fadeIn);
-        }, 30);
-    });
-});
-
-// Enhanced Mobile menu toggle
-const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-const navLinks = document.querySelector('.nav-links');
-
-if (mobileMenuBtn && navLinks) {
-    mobileMenuBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
-            '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
     });
 }
-
-// Add hover glow effect to all interactive elements
-document.querySelectorAll('a, button, .command-item, .docs-category').forEach(el => {
-    el.classList.add('hover-glow');
-});
-
-// Add ripple effect to buttons
-document.querySelectorAll('.neon-button, .support-btn').forEach(button => {
-    button.addEventListener('click', function(e) {
-        const x = e.clientX - e.target.getBoundingClientRect().left;
-        const y = e.clientY - e.target.getBoundingClientRect().top;
-        
-        const ripple = document.createElement('span');
-        ripple.className = 'ripple-effect';
-        ripple.style.left = `${x}px`;
-        ripple.style.top = `${y}px`;
-        
-        this.appendChild(ripple);
-        
-        setTimeout(() => {
-            ripple.remove();
-        }, 1000);
-    });
-});
-
-// Add ripple effect styles
-const rippleStyle = document.createElement('style');
-rippleStyle.textContent = `
-.ripple-effect {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.7);
-    transform: scale(0);
-    animation: ripple 0.6s linear;
-    pointer-events: none;
-}
-
-@keyframes ripple {
-    to {
-        transform: scale(4);
-        opacity: 0;
-    }
-}
-`;
-document.head.appendChild(rippleStyle);
