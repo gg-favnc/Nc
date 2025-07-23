@@ -41,7 +41,7 @@
             padding: 1.5rem;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 12px;
-            border-left: 4px solid var(--online);
+            border-left: 4px solid var(--warning);
         }
 
         .status-badge {
@@ -52,7 +52,7 @@
             border-radius: 50px;
             font-weight: 600;
             font-size: 1.1rem;
-            box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
         }
 
         .status-badge i {
@@ -152,6 +152,15 @@
 
         .status-indicator.online::after {
             background: var(--online);
+        }
+
+        .status-indicator.warning {
+            background: var(--warning);
+            box-shadow: 0 0 10px var(--warning);
+        }
+
+        .status-indicator.warning::after {
+            background: var(--warning);
         }
 
         .status-metric {
@@ -374,11 +383,14 @@
             
             <div class="status-header">
                 <div class="status-overview">
-                    <div class="status-badge online">
-                        <i class="fas fa-circle"></i>
-                        <span>All Systems Operational</span>
+                    <div class="status-badge warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Partial Outage</span>
                     </div>
                     <div class="last-updated">Last updated: <span id="update-time">Just now</span></div>
+                </div>
+                <div class="status-message">
+                    <p>We're currently investigating issues with server boosts and interactions. Some features may be degraded.</p>
                 </div>
             </div>
             
@@ -386,16 +398,16 @@
                 <div class="status-card">
                     <div class="status-card-header">
                         <h3>API Status</h3>
-                        <div class="status-indicator online"></div>
+                        <div class="status-indicator warning"></div>
                     </div>
                     <div class="status-card-body">
                         <div class="status-metric">
                             <span class="metric-label">Response Time</span>
-                            <span class="metric-value">18ms</span>
+                            <span class="metric-value">142ms</span>
                         </div>
                         <div class="status-metric">
                             <span class="metric-label">Uptime</span>
-                            <span class="metric-value">99.99%</span>
+                            <span class="metric-value">97.8%</span>
                         </div>
                     </div>
                 </div>
@@ -403,7 +415,7 @@
                 <div class="status-card">
                     <div class="status-card-header">
                         <h3>Bot Status</h3>
-                        <div class="status-indicator online"></div>
+                        <div class="status-indicator warning"></div>
                     </div>
                     <div class="status-card-body">
                         <div class="status-metric">
@@ -412,7 +424,7 @@
                         </div>
                         <div class="status-metric">
                             <span class="metric-label">Commands</span>
-                            <span class="metric-value">98.9K/day</span>
+                            <span class="metric-value">72.3K/day</span>
                         </div>
                     </div>
                 </div>
@@ -425,11 +437,11 @@
                     <div class="status-card-body">
                         <div class="status-metric">
                             <span class="metric-label">Response Time</span>
-                            <span class="metric-value">5ms</span>
+                            <span class="metric-value">8ms</span>
                         </div>
                         <div class="status-metric">
                             <span class="metric-label">Usage</span>
-                            <span class="metric-value">34%</span>
+                            <span class="metric-value">42%</span>
                         </div>
                     </div>
                 </div>
@@ -455,6 +467,17 @@
             <div class="incident-history">
                 <h2 class="section-title">Incident History</h2>
                 <div class="incident-timeline">
+                    <div class="incident-item">
+                        <div class="incident-date">July 22, 2025</div>
+                        <div class="incident-dot"></div>
+                        <div class="incident-content">
+                            <h3>Server Boost & Interaction Issues</h3>
+                            <p>We're currently experiencing a major server boost drop resulting in loss of all boost perks (nitro, custom emojis, and server level). The guild tag has been temporarily removed due to insufficient boost level.</p>
+                            <p>Additionally, there are interaction issues where buttons may display ❌ but still function properly. This is caused by a corrupted handler from an inactive system check. Our team is working on a fix.</p>
+                            <p>Please report any bugs at <a href="https://gg-favnc.github.io/Nc/support" style="color: var(--pink);">our support page</a>. Verified bug reports will earn the Bug Hunter role.</p>
+                            <div class="incident-status investigating">Investigating</div>
+                        </div>
+                    </div>
                     <div class="incident-item">
                         <div class="incident-date">June 15, 2025</div>
                         <div class="incident-dot"></div>
