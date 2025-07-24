@@ -9,15 +9,54 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .support-section {
-            padding: 2rem;
+        /* Enhanced Hero Section */
+        .support-hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(26, 5, 45, 0.8), rgba(90, 29, 154, 0.6));
+            border-radius: 12px;
+            margin: 2rem auto;
+            max-width: 1200px;
         }
         
+        .support-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .support-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #E0AAFF, #9D4EDD);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(157, 78, 221, 0.3);
+            animation: glowPulse 3s infinite alternate;
+        }
+        
+        .support-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        /* Enhanced Support Cards */
         .support-options {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-bottom: 3rem;
+            margin: 3rem auto;
+            max-width: 1200px;
         }
         
         .support-card {
@@ -26,69 +65,176 @@
             border-radius: 12px;
             padding: 2rem;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .support-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(157, 78, 221, 0.1), transparent);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
         .support-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(123, 44, 191, 0.3);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(123, 44, 191, 0.4);
+        }
+        
+        .support-card:hover::before {
+            opacity: 1;
         }
         
         .support-icon {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: var(--pink);
             margin-bottom: 1.5rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .support-card:hover .support-icon {
+            transform: scale(1.2) rotate(10deg);
+            filter: drop-shadow(0 0 10px var(--pink));
+        }
+        
+        .support-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .support-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--pink);
+            transition: width 0.3s ease;
+        }
+        
+        .support-card:hover h3::after {
+            width: 100%;
         }
         
         .support-btn {
             display: inline-block;
             padding: 0.75rem 1.5rem;
-            background: var(--light-purple);
+            background: linear-gradient(45deg, var(--light-purple), var(--purple));
             color: var(--white);
             text-decoration: none;
             border-radius: 8px;
             font-weight: 600;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        .support-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--purple), var(--light-purple));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
         .support-btn:hover {
-            background: var(--pink);
-            box-shadow: 0 0 15px var(--pink);
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
+            transform: translateY(-2px);
         }
         
+        .support-btn:hover::before {
+            opacity: 1;
+        }
+        
+        /* Enhanced Form Section */
         .support-form-container {
             background: var(--glass);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
             padding: 2rem;
-            margin-bottom: 3rem;
+            margin: 3rem auto;
+            max-width: 800px;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             display: none;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .support-form-container.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .support-form-container h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--pink);
+            text-align: center;
+        }
+        
+        .support-form-container p {
+            text-align: center;
+            margin-bottom: 2rem;
+            opacity: 0.9;
         }
         
         .form-group {
             margin-bottom: 1.5rem;
+            position: relative;
         }
         
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
+            color: var(--pink);
         }
         
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.75rem 1rem;
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--glass-border);
             border-radius: 8px;
             color: var(--white);
             font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--pink);
+            box-shadow: 0 0 10px rgba(157, 78, 221, 0.5);
         }
         
         .form-group textarea {
@@ -96,6 +242,7 @@
             resize: vertical;
         }
         
+        /* Enhanced Submit Button */
         .submit-btn {
             position: relative;
             display: inline-block;
@@ -112,6 +259,8 @@
             background: transparent;
             border: none;
             cursor: pointer;
+            margin: 1rem auto;
+            display: block;
         }
         
         .submit-btn:hover {
@@ -164,8 +313,32 @@
             animation-delay: 1.5s;
         }
         
+        /* Enhanced FAQ Section */
         .support-faq {
-            margin-top: 3rem;
+            margin: 4rem auto;
+            max-width: 1000px;
+        }
+        
+        .support-faq h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--pink);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .support-faq h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--pink), transparent);
+            border-radius: 3px;
         }
         
         .faq-item {
@@ -176,6 +349,11 @@
             overflow: hidden;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            box-shadow: 0 5px 15px rgba(157, 78, 221, 0.2);
         }
         
         .faq-question {
@@ -185,21 +363,42 @@
             align-items: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .faq-question::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--pink);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.3s ease;
         }
         
         .faq-question:hover {
             background: rgba(157, 78, 221, 0.1);
         }
         
+        .faq-question h3 {
+            font-size: 1.2rem;
+            margin: 0;
+            transition: color 0.3s ease;
+        }
+        
         .faq-question i {
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            color: var(--pink);
         }
         
         .faq-answer {
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
         }
         
         .faq-answer p {
@@ -207,234 +406,758 @@
             line-height: 1.6;
         }
         
+        .faq-answer code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--pink);
+        }
+        
         .faq-item.active .faq-question {
             background: rgba(157, 78, 221, 0.2);
         }
         
+        .faq-item.active .faq-question::before {
+            transform: scaleY(1);
+        }
+        
+        .faq-item.active .faq-question h3 {
+            color: var(--pink);
+        }
+        
         .faq-item.active .faq-question i {
             transform: rotate(180deg);
+            color: var(--pink);
         }
         
         .faq-item.active .faq-answer {
             max-height: 500px;
         }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .ticket-modal {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            padding: 2rem;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-overlay.active .ticket-modal {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .ticket-modal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            animation: rotateGradient 15s linear infinite;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            color: var(--pink);
+            font-size: 1.8rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            transform: rotate(90deg);
+            color: var(--pink);
+        }
+        
+        .rules-container {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+            padding-right: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--pink);
+        }
+        
+        .rules-container h3 {
+            color: var(--pink);
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .rules-container ul {
+            padding-left: 1.5rem;
+            margin: 0.5rem 0;
+        }
+        
+        .rules-container li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .rules-container li::before {
+            content: '•';
+            color: var(--pink);
+            position: absolute;
+            left: -1rem;
+        }
+        
+        .submit-ticket {
+            position: relative;
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, var(--light-purple), var(--purple));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .submit-ticket:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(157, 78, 221, 0.4);
+        }
+        
+        .confirmation-bubble {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background: var(--pink);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            z-index: 1001;
+            transform: scale(0);
+            opacity: 0;
+            animation: bubblePop 1s ease-out forwards;
+            pointer-events: none;
+        }
+        
+        /* Blacklist warning */
+        .blacklist-warning {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+            animation: shake 0.5s;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            background: var(--light-purple);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            opacity: 1;
+        }
+        
+        .notification.error {
+            background: #ff6b6b;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .support-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .support-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .support-faq h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes btn-anim1 {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+        
+        @keyframes btn-anim2 {
+            0% { top: -100%; }
+            50%, 100% { top: 100%; }
+        }
+        
+        @keyframes btn-anim3 {
+            0% { right: -100%; }
+            50%, 100% { right: 100%; }
+        }
+        
+        @keyframes btn-anim4 {
+            0% { bottom: -100%; }
+            50%, 100% { bottom: 100%; }
+        }
+        
+        @keyframes glowPulse {
+            0% { text-shadow: 0 0 10px rgba(157, 78, 221, 0.3); }
+            100% { text-shadow: 0 0 20px rgba(157, 78, 221, 0.6); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes floatParticle {
+            0% { transform: translate(0, 0) scale(1); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translate(var(--tx, 100px), var(--ty, 100px)) scale(0.5); opacity: 0; }
+        }
+        
+        @keyframes rotateGradient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes bubblePop {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
     </style>
 </head>
 <body>
+    <!-- Animated background elements -->
     <div class="bubbles"></div>
     <div class="bubbles"></div>
     <div class="bubbles"></div>
     
+    <!-- Navigation -->
     <nav class="glass-nav">
         <div class="nav-container">
-            <a href="index.html" class="logo">
+            <a href="index.html" class="logo hover-glow">
                 <img src="https://cdn3.emoji.gg/emojis/82624-purple-goth-heart.png" alt="Logo" class="logo-icon">
                 <span class="logo-text">Nexus Command</span>
             </a>
             <div class="nav-links">
-                <a href="index.html" class="nav-link active">Home</a>
+                <a href="index.html" class="nav-link">Home</a>
                 <a href="features.html" class="nav-link">Features</a>
                 <a href="status.html" class="nav-link">Status</a>
                 <a href="docs.html" class="nav-link">Documentation</a>
-                <a href="support.html" class="nav-link">Support</a>
-                <a href="tickets.html" class="nav-link">Ticket</a>
-                
+                <a href="support.html" class="nav-link active">Support</a>
+                <a href="tickets.html" class="nav-link">Tickets</a>
             </div>
-            <div class="mobile-menu-btn">
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
                 <i class="fas fa-bars"></i>
-            </div>
+            </button>
         </div>
     </nav>
 
-    <div class="glass-container">
-        <section class="support-section">
-            <h1 class="main-title slide-in">Support Center</h1>
-            
-            <div class="support-options">
-                <div class="support-card">
-                    <div class="support-icon"><i class="fas fa-book"></i></div>
-                    <h3>Documentation</h3>
-                    <p>Check our comprehensive documentation for answers to common questions.</p>
-                    <a href="docs.html" class="support-btn">View Docs</a>
-                </div>
-                
-                <div class="support-card">
-                    <div class="support-icon"><i class="fas fa-comments"></i></div>
-                    <h3>Discord Server</h3>
-                    <p>Join our Discord community for help from staff and other users.</p>
-                    <a href="https://discord.gg/yhPuwb4qsX" class="support-btn">Join Server</a>
-                </div>
-                
-                <div class="support-card">
-                    <div class="support-icon"><i class="fas fa-envelope"></i></div>
-                    <h3>Contact Form</h3>
-                    <p>Send us a message directly for personalized support.</p>
-                    <button class="support-btn" id="open-form-btn">Open Form</button>
-                </div>
+    <main>
+        <!-- Enhanced Hero Section -->
+        <section class="support-hero">
+            <h1 class="glitch" data-text="Need Help?">Need Help?</h1>
+            <p>Our support team is here to assist you with any issues or questions you may have about Nexus Command.</p>
+            <div class="particles" id="particles"></div>
+        </section>
+
+        <!-- Support Options Grid -->
+        <div class="support-options">
+            <div class="support-card">
+                <div class="support-icon"><i class="fas fa-book"></i></div>
+                <h3>Documentation</h3>
+                <p>Explore our comprehensive guides and tutorials covering all features and commands.</p>
+                <a href="docs.html" class="support-btn">View Documentation</a>
             </div>
             
-            <div class="support-form-container" id="support-form">
-                <h2>Contact Support</h2>
-                <p>Fill out this form and our team will get back to you as soon as possible.</p>
+            <div class="support-card">
+                <div class="support-icon"><i class="fas fa-comments"></i></div>
+                <h3>Community Support</h3>
+                <p>Join our active Discord community where other users and staff can help you.</p>
+                <a href="https://discord.gg/yhPuwb4qsX" class="support-btn">Join Discord</a>
+            </div>
+            
+            <div class="support-card" id="open-ticket-card">
+                <div class="support-icon"><i class="fas fa-ticket-alt"></i></div>
+                <h3>Ticket System</h3>
+                <p>Create a private ticket for personalized support from our staff team.</p>
+                <button class="support-btn" id="open-ticket-btn">Open Ticket</button>
+            </div>
+        </div>
+
+        <!-- Ticket Modal -->
+        <div class="modal-overlay" id="ticket-modal">
+            <div class="ticket-modal">
+                <div class="modal-header">
+                    <h2>Create Support Ticket</h2>
+                    <button class="close-modal" id="close-ticket-modal">&times;</button>
+                </div>
                 
-                <form id="support-contact-form">
+                <div class="rules-container">
+                    <h3>Before submitting a ticket:</h3>
+                    <ul>
+                        <li>Check documentation and FAQ first</li>
+                        <li>Be specific about your issue</li>
+                        <li>Include error messages if available</li>
+                        <li>Provide steps to reproduce the issue</li>
+                    </ul>
+                    
+                    <h3>Prohibited content:</h3>
+                    <ul>
+                        <li>NSFW material or inappropriate content</li>
+                        <li>Personal information</li>
+                        <li>Discord invite links</li>
+                        <li>Offensive language</li>
+                        <li>Spam or duplicate requests</li>
+                    </ul>
+                    
+                    <p class="blacklist-warning" id="blacklist-warning"></p>
+                </div>
+                
+                <form id="ticket-form">
                     <div class="form-group">
-                        <label for="username">Discord Username</label>
-                        <input type="text" id="username" name="username" placeholder="YourDiscord#0000" required>
+                        <label for="ticket-username">Discord Username</label>
+                        <input type="text" id="ticket-username" name="username" placeholder="YourDiscord#0000" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="email">Email (optional)</label>
-                        <input type="email" id="email" name="email" placeholder="you@example.com">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="issue">Issue Type</label>
-                        <select id="issue" name="issue" required>
-                            <option value="">Select an option</option>
+                        <label for="ticket-issue">Issue Type</label>
+                        <select id="ticket-issue" name="issue" required>
+                            <option value="">Select an issue type</option>
                             <option value="bug">Bug Report</option>
                             <option value="feature">Feature Request</option>
-                            <option value="general">General Question</option>
+                            <option value="account">Account Issue</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required placeholder="Describe your issue in detail..."></textarea>
+                        <label for="ticket-message">Detailed Description</label>
+                        <textarea id="ticket-message" name="message" required placeholder="Please describe your issue in detail..."></textarea>
+                        <p class="blacklist-warning" id="message-warning"></p>
                     </div>
                     
-                    <button type="submit" class="submit-btn">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        Send Message
-                    </button>
+                    <button type="submit" class="submit-ticket">Submit Ticket</button>
                 </form>
             </div>
+        </div>
+
+        <!-- Enhanced FAQ Section -->
+        <div class="support-faq">
+            <h2>Frequently Asked Questions</h2>
             
-            <div class="support-faq">
-                <h2>Frequently Asked Questions</h2>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>How do I add the bot to my server?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Click the "Add to Discord" button on our website or use the invite link from our Discord server. You'll need "Manage Server" permissions to add the bot.</p>
-                    </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How do I add Nexus Command to my server?</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Why can't I use certain commands?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Some commands require specific permissions. Check the command documentation for requirements. Server admins can adjust command permissions using <code>/settings permissions</code>.</p>
-                    </div>
+                <div class="faq-answer">
+                    <p>You can add Nexus Command to your server by:</p>
+                    <ol>
+                        <li>Clicking the "Add to Discord" button on our website</li>
+                        <li>Selecting your server from the dropdown menu</li>
+                        <li>Authorizing the required permissions</li>
+                        <li>Completing any server-specific setup with <code>/setup</code></li>
+                    </ol>
+                    <p>You'll need "Manage Server" permissions to add the bot.</p>
                 </div>
             </div>
-        </section>
-    </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Why can't I use certain commands?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Command restrictions can occur for several reasons:</p>
+                    <ul>
+                        <li><strong>Permissions:</strong> You may lack the required role or server permissions</li>
+                        <li><strong>Server Settings:</strong> The command may be disabled in your server</li>
+                        <li><strong>Channel Restrictions:</strong> The command may be limited to specific channels</li>
+                        <li><strong>Cooldowns:</strong> You may need to wait before using the command again</li>
+                    </ul>
+                    <p>Server admins can adjust command permissions using <code>/settings permissions</code>.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How do I report a bug or issue?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>To report a bug or technical issue:</p>
+                    <ol>
+                        <li>Use the <code>/bugreport</code> command in Discord</li>
+                        <li>Submit a ticket in our support server</li>
+                        <li>Use the contact form on this page</li>
+                    </ol>
+                    <p>Please include:</p>
+                    <ul>
+                        <li>Detailed description of the issue</li>
+                        <li>Steps to reproduce the problem</li>
+                        <li>Screenshots if applicable</li>
+                        <li>Any error messages received</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What should I do if the bot is offline?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>If Nexus Command appears offline:</p>
+                    <ol>
+                        <li>Check our <a href="status.html" class="hover-glow">status page</a> for system updates</li>
+                        <li>Wait a few minutes and try again - we may be deploying updates</li>
+                        <li>If the outage persists, join our Discord for updates</li>
+                        <li>For extended outages, we'll post updates on our Twitter</li>
+                    </ol>
+                    <p>Our system maintains 99.9% uptime, but occasional maintenance is required.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How can I suggest new features?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We welcome feature suggestions through:</p>
+                    <ul>
+                        <li>Our <code>/suggest</code> command in Discord</li>
+                        <li>The #suggestions channel in our support server</li>
+                        <li>GitHub issues on our repository</li>
+                        <li>The contact form on this page</li>
+                    </ul>
+                    <p>When suggesting features, please include:</p>
+                    <ul>
+                        <li>Detailed description of the feature</li>
+                        <li>How it would benefit users</li>
+                        <li>Any similar implementations you've seen</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <script>
-        // Support form toggle
-        const openFormBtn = document.getElementById('open-form-btn');
-        const supportForm = document.getElementById('support-form');
-
-        if (openFormBtn && supportForm) {
-            openFormBtn.addEventListener('click', () => {
-                supportForm.style.display = supportForm.style.display === 'block' ? 'none' : 'block';
+        // Blacklisted words and patterns
+        const blacklistedWords = [
+            'fuck', 'shit', 'bitch', 'asshole', 'cunt', 'nigger', 'fag', 
+            'whore', 'slut', 'dick', 'pussy', 'cock', 'bastard', 'retard'
+        ];
+        
+        const blacklistedPatterns = [
+            /discord\.gg\/\w+/i, // Discord invites
+            /https?:\/\/\S+/i,   // Any URLs
+            /@\S+/i              // Mentions
+        ];
+        
+        // DOM Elements
+        const ticketModal = document.getElementById('ticket-modal');
+        const openTicketBtn = document.getElementById('open-ticket-btn');
+        const closeTicketBtn = document.getElementById('close-ticket-modal');
+        const ticketForm = document.getElementById('ticket-form');
+        const ticketMessage = document.getElementById('ticket-message');
+        const blacklistWarning = document.getElementById('blacklist-warning');
+        const messageWarning = document.getElementById('message-warning');
+        
+        // Open modal
+        openTicketBtn.addEventListener('click', () => {
+            ticketModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Close modal
+        closeTicketBtn.addEventListener('click', () => {
+            ticketModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close when clicking outside
+        ticketModal.addEventListener('click', (e) => {
+            if (e.target === ticketModal) {
+                ticketModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Check for blacklisted content
+        ticketMessage.addEventListener('input', () => {
+            const message = ticketMessage.value.toLowerCase();
+            let foundBlacklist = false;
+            
+            // Check for blacklisted words
+            blacklistedWords.forEach(word => {
+                if (message.includes(word)) {
+                    messageWarning.textContent = `Warning: Your message contains inappropriate language ("${word}")`;
+                    messageWarning.style.display = 'block';
+                    foundBlacklist = true;
+                }
             });
-        }
+            
+            // Check for blacklisted patterns
+            blacklistedPatterns.forEach(pattern => {
+                if (pattern.test(message)) {
+                    messageWarning.textContent = 'Warning: Your message contains prohibited content (links or mentions)';
+                    messageWarning.style.display = 'block';
+                    foundBlacklist = true;
+                }
+            });
+            
+            if (!foundBlacklist) {
+                messageWarning.style.display = 'none';
+            }
+        });
+        
+        // Form submission
+        ticketForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const message = ticketMessage.value.toLowerCase();
+            let hasBlacklistedContent = false;
+            
+            // Validate against blacklisted words
+            blacklistedWords.forEach(word => {
+                if (message.includes(word)) {
+                    blacklistWarning.textContent = `Your ticket contains inappropriate language ("${word}"). Please remove it before submitting.`;
+                    blacklistWarning.style.display = 'block';
+                    hasBlacklistedContent = true;
+                }
+            });
+            
+            // Validate against blacklisted patterns
+            blacklistedPatterns.forEach(pattern => {
+                if (pattern.test(message)) {
+                    blacklistWarning.textContent = 'Your ticket contains prohibited content (links or mentions). Please remove them before submitting.';
+                    blacklistWarning.style.display = 'block';
+                    hasBlacklistedContent = true;
+                }
+            });
+            
+            if (hasBlacklistedContent) {
+                return;
+            }
+            
+            // Create bubble effect
+            const bubble = document.createElement('div');
+            bubble.className = 'confirmation-bubble';
+            bubble.textContent = 'Sent!';
+            bubble.style.left = `${window.innerWidth / 2 - 50}px`;
+            bubble.style.top = `${window.innerHeight / 2 - 50}px`;
+            document.body.appendChild(bubble);
+            
+            // Remove bubble after animation
+            setTimeout(() => {
+                bubble.remove();
+            }, 1000);
+            
+            // Here you would normally send the ticket data to your backend
+            const formData = new FormData(ticketForm);
+            const data = Object.fromEntries(formData);
+            console.log('Ticket submitted:', data);
+            
+            // Close modal after delay
+            setTimeout(() => {
+                ticketModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                ticketForm.reset();
+                blacklistWarning.style.display = 'none';
+                messageWarning.style.display = 'none';
+                
+                // Show success notification
+                showNotification('Your ticket has been submitted successfully!');
+            }, 1000);
+        });
 
-        // FAQ accordion
+        // Enhanced Support Form Toggle
+        const supportCards = document.querySelectorAll('.support-card');
+        const supportForm = document.getElementById('support-form');
+        
+        // Add floating particles to hero section
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random properties
+                const size = Math.random() * 8 + 3;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                const opacity = Math.random() * 0.5 + 0.1;
+                const tx = Math.random() * 200 - 100;
+                const ty = Math.random() * 200 - 100;
+                
+                particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${posX}%;
+                    top: ${posY}%;
+                    background: rgba(157, 78, 221, ${opacity});
+                    animation-duration: ${duration}s;
+                    animation-delay: ${delay}s;
+                    --tx: ${tx}px;
+                    --ty: ${ty}px;
+                `;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Card hover animations
+        supportCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const icon = card.querySelector('.support-icon');
+                icon.style.transform = 'scale(1.2) rotate(10deg)';
+                icon.style.filter = 'drop-shadow(0 0 10px var(--pink))';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                const icon = card.querySelector('.support-icon');
+                icon.style.transform = '';
+                icon.style.filter = '';
+            });
+        });
+        
+        // Enhanced FAQ Accordion
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const faqItem = question.parentElement;
-                faqItem.classList.toggle('active');
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all other FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current FAQ
+                faqItem.classList.toggle('active', !isActive);
             });
         });
-
-        // Form submission
-        const supportFormElement = document.getElementById('support-contact-form');
         
-        if (supportFormElement) {
-            supportFormElement.addEventListener('submit', (e) => {
-                e.preventDefault();
-                
-                const formData = new FormData(supportFormElement);
-                const data = Object.fromEntries(formData);
-                
-                // Replace with your actual webhook URL
-                const webhookUrl = 'https://discord.com/api/webhooks/1396248389733187665/CqhCobJCwZ86dQbi42-IPnw2hoVsTY6f_dADzGbji0PfSgNwVjR2SSKesZKgg8OlORUe';
-                
-                const embed = {
-                    title: 'New Support Request',
-                    color: 0x9D4EDD,
-                    fields: [
-                        {
-                            name: 'Username',
-                            value: data.username || 'Not provided',
-                            inline: true
-                        },
-                        {
-                            name: 'Email',
-                            value: data.email || 'Not provided',
-                            inline: true
-                        },
-                        {
-                            name: 'Issue Type',
-                            value: data.issue || 'Not specified',
-                            inline: true
-                        },
-                        {
-                            name: 'Message',
-                            value: data.message || 'No message provided'
-                        }
-                    ],
-                    timestamp: new Date().toISOString()
-                };
-                
-                fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        embeds: [embed]
-                    })
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Your support request has been submitted successfully!');
-                        supportFormElement.reset();
-                        supportForm.style.display = 'none';
-                    } else {
-                        alert('There was an error submitting your request. Please try again later.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('There was an error submitting your request. Please try again later.');
-                });
-            });
+        // Notification system
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 5000);
         }
-
+        
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
-
+        
         if (mobileMenuBtn && navLinks) {
             mobileMenuBtn.addEventListener('click', () => {
-                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
             });
         }
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            
+            // Animate cards on load
+            setTimeout(() => {
+                supportCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }, 500);
+        });
     </script>
-        <script src="script.js"></script>
-
 </body>
 </html>
