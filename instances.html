@@ -1,1 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Instances | Nexus Command</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" href="https://cdn3.emoji.gg/emojis/82624-purple-goth-heart.png" />
+  <script defer src="script.js"></script>
+  <style>
+    .instances-section {
+      padding: 3rem 2rem;
+    }
 
+    .instances-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      position: relative;
+    }
+
+    .instances-header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      color: var(--pink);
+      text-shadow: 0 0 15px var(--light-purple);
+    }
+
+    .instances-header::after {
+      content: '';
+      width: 120px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--pink), transparent);
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 4px;
+      box-shadow: 0 0 10px var(--pink);
+    }
+
+    .instance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .instance-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 25px rgba(157, 78, 221, 0.08);
+    }
+
+    .instance-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(157,78,221,0.05), transparent, rgba(157,78,221,0.05));
+      z-index: -1;
+    }
+
+    .instance-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 30px rgba(157, 78, 221, 0.3);
+    }
+
+    .instance-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--white);
+    }
+
+    .instance-meta {
+      font-size: 0.95rem;
+      color: var(--pink);
+      opacity: 0.9;
+      margin-bottom: 0.25rem;
+    }
+
+    .instance-status {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .status-online {
+      background: rgba(76, 175, 80, 0.2);
+      color: var(--online);
+      box-shadow: 0 0 10px var(--online);
+    }
+
+    .status-offline {
+      background: rgba(244, 67, 54, 0.2);
+      color: var(--offline);
+      box-shadow: 0 0 10px var(--offline);
+    }
+
+    .status-pending {
+      background: rgba(255, 193, 7, 0.2);
+      color: var(--warning);
+      box-shadow: 0 0 10px var(--warning);
+    }
+
+    .deploy-notice {
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    .deploy-notice a {
+      color: var(--pink);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .instances-header h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bubbles"></div>
+
+  <nav class="glass-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="https://cdn3.emoji.gg/emojis/82624-purple-goth-heart.png" alt="Logo" class="logo-icon">
+        <span class="logo-text">Nexus Command</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="features.html" class="nav-link">Features</a>
+        <a href="status.html" class="nav-link">Status</a>
+        <a href="instances.html" class="nav-link active">Instances</a>
+        <a href="support.html" class="nav-link">Support</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="glass-container">
+    <section class="instances-section">
+      <div class="instances-header">
+        <h1>Instances Dashboard</h1>
+      </div>
+
+      <div class="instance-grid">
+        <div class="instance-card">
+          <div class="instance-title">Fav's Bot Instance</div>
+          <div class="instance-meta">Custom Avatar • Online</div>
+          <div class="instance-meta">Commands: Ban, Kick, Welcome</div>
+          <div class="instance-status status-pending">Pending Setup</div>
+        </div>
+
+        <div class="instance-card">
+          <div class="instance-title">Helper Instance</div>
+          <div class="instance-meta">No Avatar Set</div>
+          <div class="instance-meta">Rich Presence: None</div>
+          <div class="instance-status status-pending">Pending Setup</div>
+        </div>
+
+        <div class="instance-card">
+          <div class="instance-title">Custom Premium Bot</div>
+          <div class="instance-meta">Premium User</div>
+          <div class="instance-meta">Rich Presence • AutoRole</div>
+          <div class="instance-status status-pending">Pending Setup</div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <script> 
+  </script>
+</body>
+</html>
