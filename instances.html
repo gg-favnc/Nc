@@ -8,135 +8,326 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="icon" href="https://cdn3.emoji.gg/emojis/82624-purple-goth-heart.png" />
-  <script defer src="script.js"></script>
   <style>
+    /* Additional styles specific to instances page */
     .instances-section {
       padding: 3rem 2rem;
     }
 
-    .instances-header {
+    .main-title {
       text-align: center;
-      margin-bottom: 4rem;
+      margin-bottom: 3rem;
       position: relative;
+      padding-bottom: 1rem;
     }
 
-    .instances-header h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
-      color: var(--pink);
-      text-shadow: 0 0 15px var(--light-purple);
-    }
-
-    .instances-header::after {
+    .main-title::after {
       content: '';
-      width: 120px;
-      height: 4px;
-      background: linear-gradient(90deg, var(--pink), transparent);
       position: absolute;
-      bottom: -10px;
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      border-radius: 4px;
-      box-shadow: 0 0 10px var(--pink);
+      width: 150px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--pink), transparent);
+      border-radius: 2px;
     }
 
     .instance-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
-      margin-top: 2rem;
+      margin-bottom: 4rem;
     }
 
     .instance-card {
       background: var(--glass);
       border: 1px solid var(--glass-border);
-      border-radius: 16px;
+      border-radius: 12px;
       padding: 1.5rem;
-      backdrop-filter: blur(16px);
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 25px rgba(157, 78, 221, 0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .instance-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(157,78,221,0.05), transparent, rgba(157,78,221,0.05));
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(157, 78, 221, 0.1) 0%,
+        transparent 50%,
+        rgba(157, 78, 221, 0.1) 100%
+      );
       z-index: -1;
     }
 
     .instance-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 30px rgba(157, 78, 221, 0.3);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(123, 44, 191, 0.4);
     }
 
-    .instance-title {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
+    .instance-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .instance-card-header h3 {
+      font-size: 1.3rem;
       color: var(--white);
-    }
-
-    .instance-meta {
-      font-size: 0.95rem;
-      color: var(--pink);
-      opacity: 0.9;
-      margin-bottom: 0.25rem;
+      font-weight: 600;
     }
 
     .instance-status {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.4rem 1.2rem;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--white);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      position: relative;
     }
 
-    .status-online {
-      background: rgba(76, 175, 80, 0.2);
-      color: var(--online);
+    .instance-status::after {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: pulse 2s infinite;
+    }
+
+    .instance-status.online {
+      background: var(--online);
       box-shadow: 0 0 10px var(--online);
     }
 
-    .status-offline {
-      background: rgba(244, 67, 54, 0.2);
-      color: var(--offline);
-      box-shadow: 0 0 10px var(--offline);
+    .instance-status.online::after {
+      background: var(--online);
     }
 
-    .status-pending {
-      background: rgba(255, 193, 7, 0.2);
-      color: var(--warning);
-      box-shadow: 0 0 10px var(--warning);
+    .instance-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .instance-meta:hover {
+      background: rgba(157, 78, 221, 0.2);
+    }
+
+    .meta-label {
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+
+    .meta-value {
+      font-weight: 600;
+      color: var(--pink);
+    }
+
+    .plans-section {
+      margin-top: 4rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: var(--pink);
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 10px var(--light-purple);
+      position: relative;
+      padding-left: 1rem;
+    }
+
+    .section-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 5px;
+      height: 30px;
+      background: var(--pink);
+      border-radius: 5px;
+      box-shadow: 0 0 10px var(--pink);
+    }
+
+    .plans-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .plan-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plan-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+    }
+
+    .plan-card.free::before {
+      background: var(--pink);
+    }
+
+    .plan-card.premium::before {
+      background: gold;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(123, 44, 191, 0.4);
+    }
+
+    .plan-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .plan-price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .free .plan-name,
+    .free .plan-price {
+      color: var(--pink);
+    }
+
+    .premium .plan-name,
+    .premium .plan-price {
+      color: gold;
+    }
+
+    .plan-features {
+      margin: 1.5rem 0;
+    }
+
+    .plan-feature {
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .plan-feature i {
+      font-size: 0.9rem;
+    }
+
+    .free .plan-feature i {
+      color: var(--pink);
+    }
+
+    .premium .plan-feature i {
+      color: gold;
+    }
+
+    .plan-button {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    .free .plan-button {
+      background: var(--pink);
+      color: white;
+    }
+
+    .premium .plan-button {
+      background: gold;
+      color: #111;
+    }
+
+    .terms-section {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .terms-nav {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .terms-nav a {
+      color: var(--pink);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .terms-nav a.active {
+      background: rgba(233, 30, 99, 0.2);
+    }
+
+    .terms-content {
+      display: none;
+      background: var(--glass);
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+
+    .terms-content.active {
+      display: block;
     }
 
     .deploy-notice {
-      margin-top: 4rem;
+      margin-top: 2rem;
       text-align: center;
       font-size: 1rem;
       opacity: 0.8;
     }
 
-    .deploy-notice a {
-      color: var(--pink);
-      text-decoration: underline;
-    }
-
     @media (max-width: 768px) {
-      .instances-header h1 {
-        font-size: 2.2rem;
+      .plans-comparison {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
   <div class="bubbles"></div>
-
+  <div class="bubbles"></div>
+  <div class="bubbles"></div>
+  
   <nav class="glass-nav">
     <div class="nav-container">
       <a href="index.html" class="logo">
@@ -150,42 +341,175 @@
         <a href="instances.html" class="nav-link active">Instances</a>
         <a href="support.html" class="nav-link">Support</a>
       </div>
+      <div class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </div>
     </div>
   </nav>
 
   <div class="glass-container">
     <section class="instances-section">
-      <div class="instances-header">
-        <h1>Instances Dashboard</h1>
-      </div>
-
+      <h1 class="main-title">Bot Instances</h1>
+      
       <div class="instance-grid">
         <div class="instance-card">
-          <div class="instance-title">Fav's Bot Instance</div>
-          <div class="instance-meta">Custom Avatar • Online</div>
-          <div class="instance-meta">Commands: Ban, Kick, Welcome</div>
-          <div class="instance-status status-pending">Pending Setup</div>
+          <div class="instance-card-header">
+            <h3>My Bot Instance</h3>
+            <div class="instance-status online"></div>
+          </div>
+          <div class="instance-card-body">
+            <div class="instance-meta">
+              <span class="meta-label">Tier</span>
+              <span class="meta-value">Free</span>
+            </div>
+            <div class="instance-meta">
+              <span class="meta-label">Commands</span>
+              <span class="meta-value">Basic</span>
+            </div>
+            <div class="instance-meta">
+              <span class="meta-label">Embeds</span>
+              <span class="meta-value">20/month</span>
+            </div>
+          </div>
         </div>
-
+        
         <div class="instance-card">
-          <div class="instance-title">Helper Instance</div>
-          <div class="instance-meta">No Avatar Set</div>
-          <div class="instance-meta">Rich Presence: None</div>
-          <div class="instance-status status-pending">Pending Setup</div>
-        </div>
-
-        <div class="instance-card">
-          <div class="instance-title">Custom Premium Bot</div>
-          <div class="instance-meta">Premium User</div>
-          <div class="instance-meta">Rich Presence • AutoRole</div>
-          <div class="instance-status status-pending">Pending Setup</div>
+          <div class="instance-card-header">
+            <h3>Premium Bot</h3>
+            <div class="instance-status online"></div>
+          </div>
+          <div class="instance-card-body">
+            <div class="instance-meta">
+              <span class="meta-label">Tier</span>
+              <span class="meta-value">Premium</span>
+            </div>
+            <div class="instance-meta">
+              <span class="meta-label">Commands</span>
+              <span class="meta-value">All</span>
+            </div>
+            <div class="instance-meta">
+              <span class="meta-label">Embeds</span>
+              <span class="meta-value">Unlimited</span>
+            </div>
+          </div>
         </div>
       </div>
-
+      
+      <div class="plans-section">
+        <h2 class="section-title">Plans & Pricing</h2>
+        
+        <div class="plans-comparison">
+          <div class="plan-card free">
+            <h3 class="plan-name">Free Tier</h3>
+            <div class="plan-price">$0</div>
+            <div class="plan-features">
+              <div class="plan-feature"><i class="fas fa-check"></i> Basic commands</div>
+              <div class="plan-feature"><i class="fas fa-check"></i> 20 embeds/month</div>
+              <div class="plan-feature"><i class="fas fa-check"></i> 7-day duration</div>
+              <div class="plan-feature"><i class="fas fa-check"></i> Standard support</div>
+            </div>
+            <a href="https://discord.com/oauth2/authorize?client_id=1374804292632051834&permissions=8&scope=bot%20applications.commands" class="plan-button">Get Started</a>
+          </div>
+          
+          <div class="plan-card premium">
+            <h3 class="plan-name">Premium Tier</h3>
+            <div class="plan-price">30 CAD/year</div>
+            <div class="plan-features">
+              <div class="plan-feature"><i class="fas fa-check"></i> All commands</div>
+              <div class="plan-feature"><i class="fas fa-check"></i> Unlimited embeds</div>
+              <div class="plan-feature"><i class="fas fa-check"></i> 30-day duration</div>
+              <div class="plan-feature"><i class="fas fa-check"></i> Priority support</div>
+              <div class="plan-feature"><i class="fas fa-check"></i> Custom appearance</div>
+            </div>
+            <a href="https://discord.gg/yhPuwb4qsX" class="plan-button">Upgrade Now</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="terms-section" id="terms">
+        <div class="terms-nav">
+          <a href="#terms" class="terms-link active" data-tab="terms">Terms</a>
+          <a href="#terms" class="terms-link" data-tab="privacy">Privacy</a>
+        </div>
+        
+        <div class="terms-content active" id="terms-content">
+          <h3>Terms of Service</h3>
+          <ul>
+            <li>Follow Discord's Terms of Service</li>
+            <li>No abusive behavior allowed</li>
+            <li>Premium is non-refundable</li>
+            <li>We may terminate abusive instances</li>
+          </ul>
+        </div>
+        
+        <div class="terms-content" id="privacy-content">
+          <h3>Privacy Policy</h3>
+          <ul>
+            <li>We store only necessary bot data</li>
+            <li>No data sharing with third parties</li>
+            <li>Data deleted when instances expire</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="deploy-notice">
+        <p><strong>🚀 Officially Deployed!</strong> Create your bot with <code>/instancecreate</code> in our Discord.</p>
+      </div>
     </section>
   </div>
 
-    <script src="script.js"></script>
-
+  <script src="script.js"></script>
+  <script>
+    // Tab switching functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const termLinks = document.querySelectorAll('.terms-link');
+      
+      termLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const tab = this.getAttribute('data-tab');
+          
+          // Update active tab
+          termLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Update active content
+          document.querySelectorAll('.terms-content').forEach(content => {
+            content.classList.remove('active');
+          });
+          document.getElementById(`${tab}-content`).classList.add('active');
+        });
+      });
+      
+      // Load correct tab from hash
+      if (window.location.hash === '#terms') {
+        const tab = window.location.hash === '#terms' ? 'terms' : 'privacy';
+        document.querySelector(`.terms-link[data-tab="${tab}"]`).click();
+      }
+      
+      // Add animations to cards
+      const cards = document.querySelectorAll('.instance-card, .plan-card');
+      cards.forEach((card, index) => {
+        card.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s forwards`;
+        card.style.opacity = '0';
+      });
+    });
+    
+    // Add keyframes for animations
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
 </body>
 </html>
