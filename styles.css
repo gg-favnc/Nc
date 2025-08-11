@@ -486,4 +486,80 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--pink);
+
+}
+
+.private-notice {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+}
+
+.private-notice h1 {
+    font-size: 3rem;
+    color: var(--error);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 15px var(--error);
+    font-family: 'Orbitron', sans-serif;
+}
+
+.private-notice p {
+    font-size: 1.5rem;
+    max-width: 800px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.warning-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background: var(--glass);
+    border: 1px solid var(--error);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(244, 67, 54, 0.5);
+    display: none;
+}
+
+.warning-modal h3 {
+    color: var(--error);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.warning-modal p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.warning-modal .close-btn {
+    background: var(--error);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.warning-modal .close-btn:hover {
+    background: #d32f2f;
+    box-shadow: 0 0 15px var(--error);
 }
